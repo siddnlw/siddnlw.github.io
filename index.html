@@ -2,6 +2,9 @@
 <html>
 
     <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Siddharth Nalwaya</title>
         <link rel="stylesheet" href="style.css"/>
     </head>
@@ -12,7 +15,7 @@
               <ul class="main-nav">
                 <li class="nav-item active">Home</li>
                 <li class="nav-item">Projects</li>
-                <li class="nav-item">Experence</li>
+                <li class="nav-item">Experince</li>
                 <li class="nav-item">About Me</li>
                 <li class="nav-item">Contact</li>
               </ul>
@@ -37,7 +40,13 @@
               </div>
             </div>
             <div class="welcome-image">
-              <img src="./src/sid-img-2.png " alt="">
+              <div class="loading" id="js-loader">
+                <div class="loader"></div>
+              </div>
+              <!-- <div class="wrapper"> -->
+              <canvas id="c"></canvas>
+              <!-- </div> -->
+              <!-- <img src="./src/sid-img-2.png " alt=""> -->
             </div>
           </div>
           <div class="skills">
@@ -45,6 +54,9 @@
           </div>
         </div>
         <button class="theme"></button>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/108/three.min.js'></script>
+<!-- This brings in the ability to load custom 3D objects in the .gltf file format. Blender allows the ability to export to this format out the box -->
+<script src='https://cdn.jsdelivr.net/gh/mrdoob/Three.js@r92/examples/js/loaders/GLTFLoader.js'></script>
+<script src="./script.js"></script>
     </body>
-    <script src="./script.js"></script>
-</html>
+    </html>
