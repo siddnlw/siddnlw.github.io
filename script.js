@@ -1,6 +1,7 @@
 
   function scrollX(left, activeTab) {
-    window.scroll({top:0,left:left * window.innerWidth})
+    $(".container").animate({marginLeft: (left * window.innerWidth * -1)})
+    window.scroll({top:0})
     $('.nav-item').removeClass('active')
     $(activeTab).addClass('active')
 };
