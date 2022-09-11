@@ -1,6 +1,14 @@
-window.onload = () => {
-  const themeBtn = document.querySelector(".theme");
 
+  function scrollX(left, activeTab) {
+    window.scroll({top:0,left:left * window.innerWidth})
+    $('.nav-item').removeClass('active')
+    $(activeTab).addClass('active')
+};
+
+window.onload = () => {
+    // window.scroll({top:0,left:2*window.innerWidth})
+  const themeBtn = document.querySelector(".theme");
+  loadTheme();
   function getCurrentTheme() {
     let theme = window.matchMedia("(prefers-color-scheme:dark)").matches
       ? "dark"
@@ -10,6 +18,8 @@ window.onload = () => {
       : null;
     return theme;
   }
+
+
 
   function loadTheme() {
     const root = document.querySelector(":root");
@@ -308,29 +318,29 @@ window.onload = () => {
     return { x: dx, y: dy };
   }
 })();
-const debounce = (fn) => {
+// const debounce = (fn) => {
 
-  let frame;
+//   let frame;
 
-  return (...params) => {
+//   return (...params) => {
     
-    if (frame) { 
-      cancelAnimationFrame(frame);
-    }
+//     if (frame) { 
+//       cancelAnimationFrame(frame);
+//     }
 
-    frame = requestAnimationFrame(() => {
+//     frame = requestAnimationFrame(() => {
       
-      fn(...params);
-    });
+//       fn(...params);
+//     });
 
-  } 
-};
+//   } 
+// };
 
 
-const storeScroll = () => {
-  document.documentElement.dataset.scroll = window.scrollY;
-}
+// const storeScroll = () => {
+//   document.documentElement.dataset.scroll = window.scrollY;
+// }
 
-document.addEventListener('scroll', debounce(storeScroll), { passive: true });
+// document.addEventListener('scroll', debounce(storeScroll), { passive: true });
 
-storeScroll();
+// storeScroll();

@@ -1,64 +1,129 @@
 <!DOCTYPE HTML>
 <html>
 
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-      <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Siddharth Nalwaya</title>
-        <link rel="stylesheet" href="style.css"/>
-    </head>
-    
-    <body>
-        <header class="header">
-            <nav class="navbar">
-              <ul class="main-nav">
-                <li class="nav-item active">Home</li>
-                <li class="nav-item">Projects</li>
-                <li class="nav-item">Experince</li>
-                <li class="nav-item">About Me</li>
-                <li class="nav-item">Contact</li>
-              </ul>
-              <div class="indicator"></div>
-            </nav>
-        </header>
-        <div class="content">
-          <div class="welcome">
-            <div class="welcome-text">
-              <h2>Hello, I'm</h2>
-              <br>
-              <h1>Siddharth Nalwaya</h1>
-              <br>
-              <h3>Freelance & Fullstack Devloper</h3>
-              <br><br>
-              <div class="welcome-text-typewriter">
-                <h5 class="first">Web Devloper</h5>
-                <br>
-                <h5 class="second">Fullstack Devloper</h5>
-                <br>
-                <h5 class="third">Freelancer</h5>
-              </div>
-            </div>
-            <div class="welcome-image">
-              <div class="loading" id="js-loader">
-                <div class="loader"></div>
-              </div>
-              <!-- <div class="wrapper"> -->
-              <canvas id="c"></canvas>
-              <!-- </div> -->
-              <!-- <img src="./src/sid-img-2.png " alt=""> -->
-            </div>
-          </div>
-          <div class="skills">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Siddharth Nalwaya</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
 
+<body>
+  <header class="header">
+    <nav class="navbar">
+      <ul class="main-nav">
+        <li id="home-tab" class="nav-item active" onclick="scrollX(0,'#home-tab')">Home</li>
+        <li id="projects-tab" class="nav-item" onclick="scrollX(1,'#projects-tab')">Projects</li>
+        <li id="experince-tab" class="nav-item" onclick="scrollX(2,'#experince-tab')">Experince</li>
+        <li id="aboutme-tab" class="nav-item" onclick="scrollX(3,'#aboutme-tab')">About Me</li>
+        <li id="contact-tab" class="nav-item" onclick="scrollX(4,'#contact-tab')">Contact</li>
+      </ul>
+      <div class="indicator"></div>
+    </nav>
+  </header>
+  <div class="container">
+    <div id="home" class="content">
+
+      <div class="intro">
+        <div class="intro-bgimage"></div>
+        <div class="intro-text">
+          <h2>Hello, I'm</h2>
+          <br>
+          <h1>Siddharth Nalwaya</h1>
+          <br>
+          <h3>Freelance & Fullstack Devloper</h3>
+          <br><br>
+          <div class="intro-text-typewriter">
+            <h5 class="first">Web Devloper</h5>
+            <br>
+            <h5 class="second">Fullstack Devloper</h5>
+            <br>
+            <h5 class="third">Freelancer</h5>
           </div>
         </div>
-        <button class="theme"></button>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/108/three.min.js'></script>
-<!-- This brings in the ability to load custom 3D objects in the .gltf file format. Blender allows the ability to export to this format out the box -->
-<script src='https://cdn.jsdelivr.net/gh/mrdoob/Three.js@r92/examples/js/loaders/GLTFLoader.js'></script>
-<script src="https://cdn.jsdelivr.net/gh/mrdoob/Three.js@r92/examples/js/libs/inflate.min.js"></script>
-<script src='https://cdn.jsdelivr.net/gh/mrdoob/Three.js@r92/examples/js/loaders/FBXLoader.js'></script>
-<script src="./script.js"></script>
-    </body>
-    </html>
+        <div class="intro-image">
+          <div class="loading" id="js-loader">
+            <div class="loader"></div>
+          </div>
+          <canvas id="c"></canvas>
+        </div>
+      </div>
+      <div id="skills" class="skill-container">
+        <div class="scroll-down">
+          <a href="#skills">^</a>
+        </div>
+        <div class="skills">
+          <div class="col">
+            <div class="skill-image percent-50">
+              <img src="./src/web-developing.png" alt="">
+            </div>
+            <h3>Web Devlopment</h3>
+            <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+              ea commodo consequat.</h5>
+          </div>
+          <div class="col">
+            <div class="skill-image percent-75">
+              <img src="./src/developing.png" alt="">
+            </div>
+            <h3>Backend</h3>
+            <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+              ea commodo consequat.</h5>
+          </div>
+          <div class="col">
+            <div class="skill-image percent-50">
+              <img src="./src/database.png" alt="">
+            </div>
+            <h3>Database</h3>
+            <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+              ea commodo consequat.</h5>
+          </div>
+          <div class="col">
+            <div class="skill-image percent-50">
+              <img src="./src/coding.png" alt="">
+            </div>
+            <h3>Programing Languages</h3>
+            <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+              ea commodo consequat.</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="projects" class="projects">projects</div>
+    <div id="experince" class="experince">
+      <div>
+        <h2>nDimensions(internship)</h2>
+        <h4>I worked here as a Fullstack Devloper</h4>
+      </div>
+      <div>
+        <h2>BlitzBudd(internship)</h2>
+        <h4>I worked here as a Fullstack Devloper</h4>
+      </div>
+      <div>
+        <h2>Razorpay</h2>
+        <h4>I worked here as a Fullstack Devloper</h4>
+      </div>
+      <div>
+        <h2>Freelance</h2>
+        <h4>I worked here as a Fullstack Devloper</h4>
+      </div>
+    </div>
+    <div id="about-me" class="about-me"></div>
+    <div id="contact" class="contact"></div>
+  </div>
+  </div>
+  <button class="theme"></button>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/108/three.min.js'></script>
+  <script src='https://cdn.jsdelivr.net/gh/mrdoob/Three.js@r92/examples/js/loaders/GLTFLoader.js'></script>
+  <script src="https://cdn.jsdelivr.net/gh/mrdoob/Three.js@r92/examples/js/libs/inflate.min.js"></script>
+  <script src='https://cdn.jsdelivr.net/gh/mrdoob/Three.js@r92/examples/js/loaders/FBXLoader.js'></script>
+  <script src="./script.js"></script>
+</body>
+
+</html>
