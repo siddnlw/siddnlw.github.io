@@ -1,6 +1,6 @@
 :root{
     --bg-primary-light: #F3FCF9;
-    --bg-secondary-light: rgba(152, 221, 191, 0.5);
+    --bg-secondary-light: rgba(152, 221, 191);
     --bg-tertairy-light: #1DC082;
     --text-primary-light: #181816;
     --text-secondary-light: rgb(19, 180, 115);
@@ -88,6 +88,7 @@ body {
     position: fixed;
     top: 90vh;
     right: 20px;
+    z-index: 100;
   }
   
   .theme:hover{
@@ -101,10 +102,14 @@ ul {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 6vh;
+    height: 10vh;
     margin: auto;
-    background: var(--bg-secondary);
     font-size: large;
+    z-index: 100;
+  }
+  html:not([data-scroll='0']) .header {
+    background: var(--bg-secondary);
+    position: fixed;
   }
   .navbar {
     position: relative;
@@ -113,7 +118,7 @@ ul {
   .main-nav {
     display: flex;
     margin: auto;
-    gap: 10px;
+    gap: 80px;
   }
   .nav-item {
     padding: 10px;
@@ -161,21 +166,27 @@ ul {
     opacity: 0.5;
     transition: 0.3s;
   }
-  .content .welcome{
-    background: var(--bg-image2) top,  var(--bg-primary);
+  .content .intro{
+    background: var(--bg-primary);
     width: 100%;
-    height: 94vh;
+    height: 100vh;
     display: flex;
     overflow: hidden;
-    /* display: inline-block;
-    color: var(--text-tertairy);
-    border-right: .25em solid var(--text-secondary);
-    white-space: nowrap;
-    animation: 
-    typing 1.5s ease-in-out; */
   }
-
-  .content .welcome .welcome-text{
+  
+  .content .intro .intro-bgimage{
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+    background: var(--bg-image2) top;
+    position: absolute;
+    bottom: 0vh;
+    left: 0;
+    background-repeat: no-repeat;
+    /* background-size: cover; */
+    opacity: 0.4;
+  }
+  .content .intro .intro-text{
     /* background: var(--bg-primary); */
     height: 100%;
     width: 40%;
@@ -185,19 +196,20 @@ ul {
     flex-direction: column;
     margin-left: 20%;
   }
-  .content .welcome .welcome-text h1{
+  .content .intro .intro-text h1{
     font-size: 80px;
     color: var(--text-primary);
   }
-  .content .welcome .welcome-text h2{
+  .content .intro .intro-text h2{
     font-size: 30px;
     color: var(--text-secondary);
   }
-  .content .welcome .welcome-text h3{
+  .content .intro .intro-text h3{
     font-size: 30px;
     color: var(--text-secondary);
+    z-index: 1;
   }
-  .content .welcome .welcome-text .welcome-text-typewriter h5{
+  .content .intro .intro-text .intro-text-typewriter h5{
     width: 0;
     display: inline-flex;
     color: var(--text-tertairy);
@@ -209,9 +221,9 @@ ul {
     typing 1s steps(40, end) forwards,
     blink-caret .5s step-end infinite;
   }
-  .content .welcome .welcome-text .welcome-text-typewriter .first{--w:16ch;animation-delay: 0s;}
-  .content .welcome .welcome-text .welcome-text-typewriter .second{--w:22ch;animation-delay: 1.5s;}
-  .content .welcome .welcome-text .welcome-text-typewriter .third{--w:13ch;animation-delay: 3s}
+  .content .intro .intro-text .intro-text-typewriter .first{--w:16ch;animation-delay: 0s;}
+  .content .intro .intro-text .intro-text-typewriter .second{--w:22ch;animation-delay: 1.5s;}
+  .content .intro .intro-text .intro-text-typewriter .third{--w:13ch;animation-delay: 3s}
 
   
   @keyframes typing {
@@ -223,7 +235,7 @@ ul {
     from, to { border-color: transparent }
     50% { border-color: var(--text-secondary); }
   }
-  .content .welcome .welcome-image{
+  .content .intro .intro-image{
     background: var(--bg-image1);
     background-position: center;
     background-repeat: no-repeat;
@@ -234,15 +246,6 @@ ul {
     width: 60%;
   }
 
-
-/* 
-
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  } */
   #c {
     position: absolute;
     top: 0;
@@ -299,23 +302,35 @@ ul {
   }
 
 
-
-
-
-
-
-
   .content .skills{
     height: 100vh;
     width: 100%;
     background: var(--bg-secondary);
+    display: flex;
+    overflow: hidden;
+  }
+  .content .skills .skill-globe{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
   }
 
+  .content .skills .skill-text{
+    height: 100%;
+    width: 50%;
+    padding-top: 50px;
+    padding-left: 50px;
+  }
+
+
   @media screen and (max-width: 992px) {
-    .content .welcome{
+    .content .intro{
       flex-direction: column;
     }
-    .content .welcome .welcome-image{
+    .content .intro .intro-image{
       display: none;
     }
 
