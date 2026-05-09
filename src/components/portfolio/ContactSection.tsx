@@ -38,7 +38,9 @@ const ContactSection = () => {
         </motion.div>
 
         <motion.form
-          onSubmit={handleSubmit}
+          action="https://formsubmit.co/siddnlw@gmail.com"
+          method="POST"
+          // onSubmit={handleSubmit}
           className="glass rounded-2xl p-6 space-y-4 mb-8"
           initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
           whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -46,24 +48,27 @@ const ContactSection = () => {
           transition={{ duration: 0.5, delay: 0.1 }}
         >
           <input
+          name="name"
             type="text"
             placeholder="Name"
             required
             className="w-full px-4 py-3 rounded-lg bg-secondary border border-border/50 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
           />
           <input
+          name="email"
             type="email"
             placeholder="Email"
             required
             className="w-full px-4 py-3 rounded-lg bg-secondary border border-border/50 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
           />
           <textarea
+          name="message"
             placeholder="Your message..."
             rows={4}
             required
             className="w-full px-4 py-3 rounded-lg bg-secondary border border-border/50 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none"
           />
-          <Button variant="hero" className="w-full" type="submit" disabled={sent}>
+          <Button variant="hero" className="w-full cursor-target" type="submit" disabled={sent}>
             {sent ? "Message Sent ✓" : <>Send Message <Send className="w-4 h-4 ml-1" /></>}
           </Button>
         </motion.form>
@@ -81,7 +86,7 @@ const ContactSection = () => {
               href={s.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-12 h-12 rounded-full glass flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/30 transition-all duration-200 active:scale-95"
+              className="w-12 h-12 cursor-target rounded-full glass flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/30 transition-all duration-200 active:scale-95"
               aria-label={s.label}
             >
               <s.icon className="w-5 h-5" />

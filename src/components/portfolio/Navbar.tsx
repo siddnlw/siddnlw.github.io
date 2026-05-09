@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import GlassSurface from "@/component/GlassSurface";
 
 const links = [
   { label: "About", href: "#about" },
@@ -33,69 +34,88 @@ const Navbar = () => {
   }, []);
 
   return (
-    <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "glass py-3" : "py-5"
-      }`}
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+    <GlassSurface
+      displace={0.5}
+      distortionScale={-180}
+      redOffset={20}
+      saturation={1}
+      greenOffset={10}
+      blueOffset={15}
+      brightness={50}
+      opacity={0.93}
+      mixBlendMode="screen"
+      borderRadius={20}
+      className="!w-[95dvw] mx-auto sticky top-4 -mt-[4.5rem] z-50 transition-all duration-300"
+      // width={250}
+      height={70}
     >
-      <div className="container-tight flex items-center justify-between px-4">
-        <a href="#hero" className="text-lg font-bold tracking-tight">
-          S<span className="text-primary">.</span>N
-        </a>
+      {/* <motion.header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled ? "glass py-3" : "py-5"
+        }`}
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      > */}
+        <div className="container-tight flex items-center justify-between px-4 w-full">
+          <a href="#hero" className={"text-lg [text-shadow:_0px_0px_1px_rgba(0,0,0,1)] font-bold tracking-tight transition-colors duration-[5000ms] " + (scrolled ? "text-white" : "text-white")}>
+            S<span className="text-green-600">.</span>N
+          </a>
 
-        {/* Desktop */}
-        <nav className="hidden md:flex items-center gap-8">
-          {links.map((l) => (
-            <a
-              key={l.label}
-              href={l.href}
-              className={`text-sm transition-colors duration-200 relative ${
-                activeSection === l.href.slice(1)
-                  ? "text-primary"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {l.label}
-              {activeSection === l.href.slice(1) && (
-                <motion.span
-                  layoutId="nav-indicator"
-                  className="absolute -bottom-1 left-0 right-0 h-px bg-primary"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                />
-              )}
-            </a>
-          ))}
-        </nav>
+          {/* Desktop */}
+          <nav className="hidden md:flex items-center gap-8">
+            {links.map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                className={`text-sm transition-colors duration-200 relative cursor-target px-3 py-1 ${
+                  activeSection === l.href.slice(1)
+                    ? "text-green-600"
+                    : (scrolled ? "text-white" : "text-white") +" hover:text-foreground [text-shadow:_0px_0px_1px_rgba(0,0,0,1)]"
+                }`}
+              >
+                {l.label}
+                {activeSection === l.href.slice(1) && (
+                  <motion.span
+                    layoutId="nav-indicator"
+                    className="absolute -bottom-1 left-0 right-0 h-px bg-primary"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </a>
+            ))}
+          </nav>
 
-        {/* Mobile toggle */}
-        <button className="md:hidden text-foreground active:scale-95" onClick={() => setOpen(!open)}>
-          {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
-      </div>
+          {/* Mobile toggle */}
+          <button
+            className="md:hidden text-foreground active:scale-95"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
 
-      {/* Mobile menu */}
-      {open && (
-        <motion.nav
-          className="md:hidden glass mt-2 mx-4 rounded-xl p-4 flex flex-col gap-3"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          {links.map((l) => (
-            <a
-              key={l.label}
-              href={l.href}
-              onClick={() => setOpen(false)}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors py-1"
-            >
-              {l.label}
-            </a>
-          ))}
-        </motion.nav>
-      )}
-    </motion.header>
+        {/* Mobile menu */}
+        {open && (
+          <motion.nav
+            className="md:hidden glass mt-2 mx-4 rounded-xl p-4 flex flex-col gap-3"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            {links.map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                onClick={() => setOpen(false)}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors py-1"
+              >
+                {l.label}
+              </a>
+            ))}
+          </motion.nav>
+        )}
+      {/* </motion.header> */}
+    </GlassSurface>
   );
 };
 

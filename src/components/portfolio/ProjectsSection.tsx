@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ExternalLink, Github, X, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import TiltCard from "./TiltCard";
+import BorderGlow from "@/component/BorderGlow";
 
 const projects = [
   {
@@ -10,14 +11,22 @@ const projects = [
     desc: "Uber-like real-time dispatch system for emergency ambulances. Features auto/manual dispatch, keyboard-driven UI, and real-time tracking — outperforming traditional 911 dispatch.",
     tech: ["React", "Next.js", "PubNub", "Vite", "React Native"],
     metrics: "70% reduction in dispatch time",
-    features: ["Real-time tracking", "Auto/manual dispatch", "Keyboard-first UI"],
+    features: [
+      "Real-time tracking",
+      "Auto/manual dispatch",
+      "Keyboard-first UI",
+    ],
     category: "React",
   },
   {
     title: "Cloud Architecture Builder",
     desc: "Visual drag-and-drop interface for designing AWS/Azure cloud architectures. Built with ReactFlow for intuitive node-based editing.",
     tech: ["React", "Next.js", "ReactFlow", "WebSocket"],
-    features: ["Drag-and-drop UI", "Live data visualization", "WebSocket streaming"],
+    features: [
+      "Drag-and-drop UI",
+      "Live data visualization",
+      "WebSocket streaming",
+    ],
     category: "Next.js",
   },
   {
@@ -55,41 +64,79 @@ const projects = [
 
 const filters = ["All", "React", "Next.js", "Other"];
 
-type Project = typeof projects[number];
+type Project = (typeof projects)[number];
 
-const ProjectCard = ({ project, onClick }: { project: Project; onClick: () => void }) => (
-  <TiltCard>
-    <motion.div
-      layout
-      className="glass-hover rounded-xl overflow-hidden cursor-pointer group h-full"
-      onClick={onClick}
+const ProjectCard = ({
+  project,
+  onClick,
+}: {
+  project: Project;
+  onClick: () => void;
+}) => (
+  <div
+    className="overflow-hidden cursor-pointer h-fit group cursor-target"
+    onClick={onClick}
+  >
+    <BorderGlow
+      edgeSensitivity={30}
+      glowColor="40 80 80"
+      backgroundColor="#120F17"
+      borderRadius={28}
+      className="overflow-hidden h-fit"
+      glowRadius={40}
+      glowIntensity={1}
+      coneSpread={25}
+      animated={false}
+      colors={["#c084fc", "#f472b6", "#38bdf8"]}
     >
       <div className="h-32 bg-gradient-to-br from-primary/10 to-[hsl(var(--glow-secondary))]/10 flex items-center justify-center relative overflow-hidden">
         <Layers className="w-10 h-10 text-primary/40 transition-transform duration-500 group-hover:scale-125 group-hover:rotate-12" />
         <div className="absolute inset-0 bg-gradient-to-t from-card/80 to-transparent" />
       </div>
       <div className="p-5">
-        <h3 className="font-semibold mb-2 group-hover:text-primary transition-colors duration-200">{project.title}</h3>
-        <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{project.desc}</p>
-        {project.metrics && <div className="text-xs font-mono text-primary mb-3">{project.metrics}</div>}
+        <h3 className="font-semibold mb-2 group-hover:text-primary transition-colors duration-200">
+          {project.title}
+        </h3>
+        <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
+          {project.desc}
+        </p>
+        {project.metrics && (
+          <div className="text-xs font-mono text-primary mb-3">
+            {project.metrics}
+          </div>
+        )}
         <div className="flex flex-wrap gap-1.5">
           {project.tech.slice(0, 4).map((t) => (
-            <span key={t} className="px-2 py-0.5 rounded text-xs bg-secondary text-secondary-foreground">{t}</span>
+            <span
+              key={t}
+              className="px-2 py-0.5 rounded text-xs bg-secondary text-secondary-foreground"
+            >
+              {t}
+            </span>
           ))}
         </div>
       </div>
-    </motion.div>
-  </TiltCard>
+    </BorderGlow>
+  </div>
 );
 
-const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => void }) => (
+const ProjectModal = ({
+  project,
+  onClose,
+}: {
+  project: Project;
+  onClose: () => void;
+}) => (
   <motion.div
     className="fixed inset-0 z-50 flex items-center justify-center p-4"
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     exit={{ opacity: 0 }}
   >
-    <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" onClick={onClose} />
+    <div
+      className="absolute inset-0 bg-background/80 backdrop-blur-sm"
+      onClick={onClose}
+    />
     <motion.div
       className="relative glass rounded-2xl max-w-lg w-full p-8 max-h-[80vh] overflow-y-auto"
       initial={{ scale: 0.95, opacity: 0, y: 20 }}
@@ -97,14 +144,23 @@ const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => v
       exit={{ scale: 0.95, opacity: 0, y: 20 }}
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
     >
-      <button onClick={onClose} className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors active:scale-95">
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors active:scale-95"
+      >
         <X className="w-5 h-5" />
       </button>
       <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
-      {project.metrics && <p className="text-sm font-mono text-primary mb-4">{project.metrics}</p>}
-      <p className="text-muted-foreground mb-6 leading-relaxed">{project.desc}</p>
+      {project.metrics && (
+        <p className="text-sm font-mono text-primary mb-4">{project.metrics}</p>
+      )}
+      <p className="text-muted-foreground mb-6 leading-relaxed">
+        {project.desc}
+      </p>
       <div className="mb-6">
-        <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">Key Features</h4>
+        <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+          Key Features
+        </h4>
         <ul className="space-y-2">
           {project.features.map((f) => (
             <li key={f} className="flex items-center gap-2 text-sm">
@@ -115,10 +171,17 @@ const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => v
         </ul>
       </div>
       <div className="mb-6">
-        <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">Tech Stack</h4>
+        <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+          Tech Stack
+        </h4>
         <div className="flex flex-wrap gap-2">
           {project.tech.map((t) => (
-            <span key={t} className="px-3 py-1 rounded-md bg-primary/10 text-primary text-sm font-medium">{t}</span>
+            <span
+              key={t}
+              className="px-3 py-1 rounded-md bg-primary/10 text-primary text-sm font-medium"
+            >
+              {t}
+            </span>
           ))}
         </div>
       </div>
@@ -146,7 +209,8 @@ const ProjectsSection = () => {
   const [filter, setFilter] = useState("All");
   const [selected, setSelected] = useState<Project | null>(null);
 
-  const filtered = filter === "All" ? projects : projects.filter((p) => p.category === filter);
+  const filtered =
+    filter === "All" ? projects : projects.filter((p) => p.category === filter);
 
   return (
     <section id="projects" className="section-padding">
@@ -157,7 +221,9 @@ const ProjectsSection = () => {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
-          <p className="text-sm font-mono text-primary mb-3 tracking-wider uppercase">Projects</p>
+          <p className="text-sm font-mono text-primary mb-3 tracking-wider uppercase">
+            Projects
+          </p>
           <h2 className="text-3xl md:text-4xl font-bold mb-10 text-balance">
             Things I've <span className="gradient-text">built</span>
           </h2>
@@ -171,31 +237,53 @@ const ProjectsSection = () => {
           transition={{ duration: 0.5, delay: 0.1 }}
         >
           {filters.map((f) => (
-            <button
-              key={f}
-              onClick={() => setFilter(f)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 active:scale-[0.96] ${
-                filter === f
-                  ? "bg-primary text-primary-foreground"
-                  : "glass text-muted-foreground hover:text-foreground"
-              }`}
+            <BorderGlow
+              edgeSensitivity={30}
+              glowColor="40 80 80"
+              backgroundColor="#120F17"
+              borderRadius={28}
+              className="overflow-hidden h-fit"
+              glowRadius={40}
+              glowIntensity={1}
+              coneSpread={25}
+              animated={false}
+              colors={["#c084fc", "#f472b6", "#38bdf8"]}
             >
-              {f}
-            </button>
+              <button
+                key={f}
+                onClick={() => setFilter(f)}
+                className={`px-5 py-2 rounded-full text-sm font-medium cursor-target transition-all duration-200 active:scale-[0.96] ${
+                  filter === f
+                    ? "bg-primary text-primary-foreground"
+                    : " text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {f}
+              </button>
+            </BorderGlow>
           ))}
         </motion.div>
 
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <motion.div
+          layout
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+        >
           <AnimatePresence mode="popLayout">
             {filtered.map((project) => (
-              <ProjectCard key={project.title} project={project} onClick={() => setSelected(project)} />
+              <ProjectCard
+                key={project.title}
+                project={project}
+                onClick={() => setSelected(project)}
+              />
             ))}
           </AnimatePresence>
         </motion.div>
       </div>
 
       <AnimatePresence>
-        {selected && <ProjectModal project={selected} onClose={() => setSelected(null)} />}
+        {selected && (
+          <ProjectModal project={selected} onClose={() => setSelected(null)} />
+        )}
       </AnimatePresence>
     </section>
   );

@@ -79,6 +79,9 @@
   .glass {
     @apply bg-card/60 backdrop-blur-xl border border-border/50;
   }
+  .glass-light {
+    @apply bg-gradient-to-tl from-white/50 to-white/20 backdrop-blur-sm border-b border-r border-white/50 ;
+  }
 
   .glass-hover {
     @apply glass transition-all duration-300;

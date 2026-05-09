@@ -1,3 +1,4 @@
+import BorderGlow from "@/component/BorderGlow";
 import { motion } from "framer-motion";
 import { Briefcase } from "lucide-react";
 
@@ -61,7 +62,9 @@ const ExperienceSection = () => {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
-          <p className="text-sm font-mono text-primary mb-3 tracking-wider uppercase">Experience</p>
+          <p className="text-sm font-mono text-primary mb-3 tracking-wider uppercase">
+            Experience
+          </p>
           <h2 className="text-3xl md:text-4xl font-bold mb-16 text-balance">
             Where I've <span className="gradient-text">made impact</span>
           </h2>
@@ -75,7 +78,11 @@ const ExperienceSection = () => {
               initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
               whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.5, delay: 0.1 * i, ease: [0.16, 1, 0.3, 1] }}
+              transition={{
+                duration: 0.5,
+                delay: 0.1 * i,
+                ease: [0.16, 1, 0.3, 1],
+              }}
             >
               {/* Timeline connector */}
               {i < experiences.length - 1 && <div className="timeline-line" />}
@@ -84,32 +91,50 @@ const ExperienceSection = () => {
               <div className="absolute left-0 top-1 w-10 h-10 rounded-full glass flex items-center justify-center border-primary/20 group-hover:border-primary/50 transition-colors duration-300">
                 <Briefcase className="w-4 h-4 text-primary" />
               </div>
-
-              <div className="glass-hover rounded-xl p-6">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 gap-1">
-                  <div>
-                    <h3 className="text-lg font-semibold">{exp.company}</h3>
-                    <p className="text-sm text-primary">{exp.role}</p>
+              <div className="cursor-target h-fit">
+                <BorderGlow
+                  edgeSensitivity={30}
+                  glowColor="40 80 80"
+                  backgroundColor="#120F17"
+                  borderRadius={28}
+                  className=" p-6 "
+                  glowRadius={40}
+                  glowIntensity={1}
+                  coneSpread={25}
+                  animated={false}
+                  colors={["#c084fc", "#f472b6", "#38bdf8"]}
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 gap-1">
+                    <div>
+                      <h3 className="text-lg font-semibold">{exp.company}</h3>
+                      <p className="text-sm text-primary">{exp.role}</p>
+                    </div>
+                    <div className="text-sm text-muted-foreground font-mono">
+                      {exp.period}
+                    </div>
                   </div>
-                  <div className="text-sm text-muted-foreground font-mono">
-                    {exp.period}
+                  <ul className="space-y-2 mb-4">
+                    {exp.highlights.map((h, j) => (
+                      <li
+                        key={j}
+                        className="text-sm text-muted-foreground leading-relaxed flex gap-2"
+                      >
+                        <span className="text-primary mt-1.5 shrink-0">›</span>
+                        {h}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="flex flex-wrap gap-2">
+                    {exp.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="px-2.5 py-1 rounded-md bg-primary/10 text-primary text-xs font-medium"
+                      >
+                        {t}
+                      </span>
+                    ))}
                   </div>
-                </div>
-                <ul className="space-y-2 mb-4">
-                  {exp.highlights.map((h, j) => (
-                    <li key={j} className="text-sm text-muted-foreground leading-relaxed flex gap-2">
-                      <span className="text-primary mt-1.5 shrink-0">›</span>
-                      {h}
-                    </li>
-                  ))}
-                </ul>
-                <div className="flex flex-wrap gap-2">
-                  {exp.tech.map((t) => (
-                    <span key={t} className="px-2.5 py-1 rounded-md bg-primary/10 text-primary text-xs font-medium">
-                      {t}
-                    </span>
-                  ))}
-                </div>
+                </BorderGlow>
               </div>
             </motion.div>
           ))}

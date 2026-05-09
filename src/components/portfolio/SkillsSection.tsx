@@ -1,3 +1,5 @@
+import BorderGlow from "@/component/BorderGlow";
+import GlassSurface from "@/component/GlassSurface";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
@@ -44,7 +46,9 @@ const SkillsSection = () => {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
-          <p className="text-sm font-mono text-primary mb-3 tracking-wider uppercase">Skills</p>
+          <p className="text-sm font-mono text-primary mb-3 tracking-wider uppercase">
+            Skills
+          </p>
           <h2 className="text-3xl md:text-4xl font-bold mb-10 text-balance">
             Technologies I <span className="gradient-text">work with</span>
           </h2>
@@ -58,46 +62,84 @@ const SkillsSection = () => {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActive(cat)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 active:scale-[0.96] ${
-                active === cat
-                  ? "bg-primary text-primary-foreground shadow-[0_0_20px_-5px_hsl(var(--primary)/0.4)]"
-                  : "glass text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
+          {categories.map((cat) => {
+            if (cat === active)
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setActive(cat)}
+                  className={`px-5 py-2 !w-fit rounded-full cursor-target text-sm font-medium transition-all duration-200 active:scale-[0.96] ${
+                    active === cat
+                      ? "bg-primary text-primary-foreground shadow-[0_0_20px_-5px_hsl(var(--primary)/0.4)]"
+                      : " text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {cat}
+                </button>
+              );
+            else
+              return (
+                <BorderGlow
+                  edgeSensitivity={30}
+                  glowColor="40 80 80"
+                  backgroundColor="#120F17"
+                  borderRadius={28}
+                  className="overflow-hidden h-fit "
+                  glowRadius={40}
+                  glowIntensity={1}
+                  coneSpread={25}
+                  animated={false}
+                  colors={["#c084fc", "#f472b6", "#38bdf8"]}
+                >
+                  <button
+                    key={cat}
+                    onClick={() => setActive(cat)}
+                    className={`px-5 py-2 cursor-target rounded-full text-sm font-medium transition-all duration-200 active:scale-[0.96] text-muted-foreground hover:text-foreground`}
+                  >
+                    {cat}
+                  </button>
+                </BorderGlow>
+              );
+          })}
         </motion.div>
 
         {/* Skills grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {skills[active].map((skill, i) => (
-            <motion.div
-              key={skill.name}
-              className="glass-hover rounded-xl p-5 group"
-              initial={{ opacity: 0, x: -16, filter: "blur(4px)" }}
-              whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.4, delay: 0.06 * i, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <div className="flex justify-between items-center mb-3">
-                <span className="font-medium">{skill.name}</span>
-                <span className="text-sm text-muted-foreground font-mono">{skill.level}%</span>
-              </div>
-              <div className="skill-bar">
-                <motion.div
-                  className="skill-bar-fill"
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${skill.level}%` }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1, delay: 0.1 * i, ease: [0.16, 1, 0.3, 1] }}
-                />
-              </div>
-            </motion.div>
+            <div className="cursor-target h-fit">
+              <BorderGlow
+                edgeSensitivity={30}
+                glowColor="40 80 80"
+                backgroundColor="#120F17"
+                borderRadius={28}
+                className=" p-5 "
+                glowRadius={40}
+                glowIntensity={1}
+                coneSpread={25}
+                animated={false}
+                colors={["#c084fc", "#f472b6", "#38bdf8"]}
+              >
+                <div className="flex justify-between items-center mb-3">
+                  <span className="font-medium">{skill.name}</span>
+                  <span className="text-sm text-muted-foreground font-mono">
+                    {skill.level}%
+                  </span>
+                </div>
+                <div className="skill-bar">
+                  <motion.div
+                    className="skill-bar-fill"
+                    initial={{ width: 0 }}
+                    whileInView={{ width: `${skill.level}%` }}
+                    viewport={{ once: true }}
+                    transition={{
+                      duration: 1,
+                      delay: 0.1 * i,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                  />
+                </div>
+              </BorderGlow>
+            </div>
           ))}
         </div>
       </div>

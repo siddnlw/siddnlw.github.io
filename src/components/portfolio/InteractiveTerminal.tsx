@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useState, useRef, useEffect, useCallback } from "react";
 
-const commandMap: Record<string, string | string[]> = {
+const commandMap: Record<string, string | string[] | any> = {
   help: [
     "Available commands:",
     "  about       → Who is Siddharth?",
@@ -21,17 +21,17 @@ const commandMap: Record<string, string | string[]> = {
     "Tools:     Git · Figma · PubNub · WebSocket · REST APIs",
   ],
   experience: [
-    "RED.Health       → Frontend Developer (2023–Present)",
+    "RED.Health       → Frontend Developer (2023-Present)",
     "  ↳ Built ambulance dispatch system, 70% faster dispatch times",
-    "RevDau (ABG)     → Frontend Developer (2023–2024)",
+    "RevDau (ABG)     → Frontend Developer (2023-2024)",
     "  ↳ Real-time data viz, cloud architecture builder",
-    "nDimensions      → Full Stack Developer (2022–2023)",
+    "nDimensions      → Full Stack Developer (2022-2023)",
     "  ↳ Political analytics, Shopify projects",
-    "Razorpay         → Software Engineer (2021–2022)",
+    "Razorpay         → Software Engineer (2021-2022)",
     "  ↳ Payment integrations, bank simulators",
   ],
   contact: [
-    "Email:    siddharthnalwaya75@gmail.com",
+    "Email:    siddnlw@gmail.com",
     "GitHub:   github.com/siddnlw",
     "LinkedIn: linkedin.com/in/siddharthnalwaya",
     "Phone:    +91-9571305075",
@@ -43,14 +43,22 @@ const commandMap: Record<string, string | string[]> = {
     "4. Shield Helvetia → Brand website (HTML/CSS/JS)",
     "5. Sales Dashboard → Interactive charts & tables (React)",
   ],
-  joke: "Why do programmers prefer dark mode? Because light attracts bugs. 🪲",
+  joke: [
+    ["Why do programmers prefer dark mode?", "Because light attracts bugs."],
+    ["There are only 10 types of people in the world:", "Those who understand binary and those who don\'t."],
+    ["How many programmers does it take to change a light bulb?", "None. That's a hardware problem."],
+    ["Why do React developers hate surprises?", "Because they didn't put it in the dependency array."],
+    ['“Just a small UI change” in React',"→ 3 new hooks", "→ 2 context providers", "→ 1 existential crisis"],
+    ["Hydration error:","The UI you see… is not the UI you deserve."],
+    ["as any","—the unofficial peace treaty between me and TypeScript."],
+  ],
   "sudo hire": [
     "🎉 ACCESS GRANTED",
     "",
     "Congratulations! You've unlocked the secret hiring protocol.",
     "Siddharth is ready to bring 70% performance improvements to your team.",
     "",
-    "→ Email: siddharthnalwaya75@gmail.com",
+    "→ Email: siddnlw@gmail.com",
     "→ Available for: Full-time | Contract | Freelance",
   ],
 };
@@ -64,12 +72,17 @@ const InteractiveTerminal = () => {
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>([]);
   const [historyIdx, setHistoryIdx] = useState(-1);
-  const endRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const terminalRef = useRef<HTMLDivElement>(null);
 
-  const scrollToBottom = useCallback(() => {
-    endRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, []);
+const scrollToBottom = useCallback(() => {
+  if (terminalRef.current) {
+    terminalRef.current.scrollTo({
+      top: terminalRef.current.scrollHeight,
+      behavior: "smooth",
+    });
+  }
+}, []);
 
   useEffect(scrollToBottom, [lines, scrollToBottom]);
 
@@ -87,7 +100,8 @@ const InteractiveTerminal = () => {
 
     const result = commandMap[trimmed];
     if (result) {
-      const outputLines = Array.isArray(result) ? result : [result];
+      const randomJoke = Math.floor(Math.random() * result.length)
+      const outputLines = Array.isArray(result) ? trimmed === 'joke' ? Array.isArray(result[randomJoke]) ? result[randomJoke] : [result[randomJoke]] : result : [result];
       // Stagger output lines
       outputLines.forEach((line, i) => {
         setTimeout(() => {
@@ -163,6 +177,7 @@ const InteractiveTerminal = () => {
 
           {/* Terminal body */}
           <div
+          ref={terminalRef}
             className="p-4 font-mono text-sm h-[340px] overflow-y-auto cursor-text"
             onClick={() => inputRef.current?.focus()}
           >
@@ -184,6 +199,7 @@ const InteractiveTerminal = () => {
                 {line.content}
               </motion.div>
             ))}
+            {/* <div ref={endRef} /> */}
 
             {/* Input line */}
             <div className="flex items-center gap-0 mt-1">
@@ -203,7 +219,6 @@ const InteractiveTerminal = () => {
                 className="w-2 h-4 bg-primary/80 ml-0.5"
               />
             </div>
-            <div ref={endRef} />
           </div>
         </motion.div>
       </div>
