@@ -1,39 +1,63 @@
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useLight } from "@/Context/LightContext";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { useRef } from "react";
+import * as THREE from "three";
 
-const CursorGlow = () => {
-  const [pos, setPos] = useState({ x: 0, y: 0 });
-  const [visible, setVisible] = useState(false);
+function MouseLight() {
+  const lightRef = useRef<THREE.SpotLight>(null);
+  const { setLightPosition } = useLight();
 
-  useEffect(() => {
-    const move = (e: MouseEvent) => {
-      setPos({ x: e.clientX, y: e.clientY });
-      setVisible(true);
-    };
-    const leave = () => setVisible(false);
-    window.addEventListener("mousemove", move);
-    document.addEventListener("mouseleave", leave);
-    return () => {
-      window.removeEventListener("mousemove", move);
-      document.removeEventListener("mouseleave", leave);
-    };
-  }, []);
+  useFrame(({ mouse, viewport }) => {
+    if (!lightRef.current) return;
 
-  // Hide on touch devices
-  if (typeof window !== "undefined" && "ontouchstart" in window) return null;
+    lightRef.current.position.x = mouse.x * viewport.width * 0.5;
+    lightRef.current.position.y = mouse.y * viewport.height * 0.5;
+    lightRef.current.position.z = 5;
+  });
+
+  useFrame(({ mouse }) => {
+    const x = ((mouse.x + 1) / 2) * 100;
+    const y = ((mouse.y + 1) / 2) * 100;
+
+    setLightPosition({
+      x,
+      y,
+    });
+
+    lightRef.current.position.x = mouse.x * 5;
+    lightRef.current.position.y = mouse.y * 5;
+  });
 
   return (
-    <motion.div
-      className="fixed pointer-events-none z-[9999] w-[500px] h-[500px] rounded-full"
-      style={{
-        background: "radial-gradient(circle, hsl(var(--primary) / 0.04) 0%, transparent 70%)",
-        left: pos.x - 250,
-        top: pos.y - 250,
-      }}
-      animate={{ opacity: visible ? 1 : 0 }}
-      transition={{ duration: 0.3 }}
+    <spotLight
+      ref={lightRef}
+      intensity={50}
+      angle={0.3}
+      penumbra={1}
+      position={[0, 0, 5]}
     />
   );
-};
+}
 
-export default CursorGlow;
+export default function App() {
+  return (
+    <Canvas camera={{ position: [0, 0, 0] }}
+    className="-z-1"
+     style={{
+    position: "fixed",
+    inset: 0,
+    width: "100dvw",
+    height: "100dvh",
+    pointerEvents: "none",
+  }}>
+      {/* <ambientLight intensity={0.3} /> */}
+
+      <MouseLight />
+
+      {/* <mesh>
+        <sphereGeometry args={[1, 32, 32]} />
+        <meshStandardMaterial color="orange" />
+      </mesh> */}
+    </Canvas>
+  );
+}

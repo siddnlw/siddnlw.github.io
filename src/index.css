@@ -75,6 +75,24 @@
   }
 }
 
+.glass-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      var(--glow-w) var(--glow-h)
+      at var(--light-x) var(--light-y),
+      rgba(255,255,255,var(--highlight)) 0%,
+      rgba(255,255,255,var(--mid)) 30%,
+      rgba(255,255,255,var(--outer)) 60%,
+      transparent 100%
+    );
+
+  mix-blend-mode: screen;
+}
+
 @layer components {
   .glass {
     @apply bg-card/60 backdrop-blur-xl border border-border/50;

@@ -34,19 +34,15 @@ const Navbar = () => {
   }, []);
 
   return (
+    <div className="sticky !w-[95dvw] mx-auto  top-4 -mt-[4.5rem] z-50 transition-all duration-300">
     <GlassSurface
       displace={0.5}
       distortionScale={-180}
-      redOffset={20}
-      saturation={1}
-      greenOffset={10}
-      blueOffset={15}
-      brightness={50}
-      opacity={0.93}
+      brightness={500}
+      opacity={.73}
       mixBlendMode="screen"
       borderRadius={20}
-      className="!w-[95dvw] mx-auto sticky top-4 -mt-[4.5rem] z-50 transition-all duration-300"
-      // width={250}
+      className="!w-full"
       height={70}
     >
       {/* <motion.header
@@ -68,7 +64,7 @@ const Navbar = () => {
               <a
                 key={l.label}
                 href={l.href}
-                className={`text-sm transition-colors duration-200 relative cursor-target px-3 py-1 ${
+                className={`text-sm transition-all duration-200 relative cursor-target px-3 py-1 ${
                   activeSection === l.href.slice(1)
                     ? "text-green-600"
                     : (scrolled ? "text-white" : "text-white") +" hover:text-foreground [text-shadow:_0px_0px_1px_rgba(0,0,0,1)]"
@@ -96,9 +92,11 @@ const Navbar = () => {
         </div>
 
         {/* Mobile menu */}
+      {/* </motion.header> */}
+    </GlassSurface>
         {open && (
           <motion.nav
-            className="md:hidden glass mt-2 mx-4 rounded-xl p-4 flex flex-col gap-3"
+            className="md:hidden glass mt-2 mx-4 rounded-xl p-4 flex flex-col gap-3 "
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
           >
@@ -114,8 +112,8 @@ const Navbar = () => {
             ))}
           </motion.nav>
         )}
-      {/* </motion.header> */}
-    </GlassSurface>
+    </div>
+
   );
 };
 
