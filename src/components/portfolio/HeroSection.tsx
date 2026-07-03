@@ -4,6 +4,8 @@ import { ArrowDown, Send } from "lucide-react";
 import MagneticButton from "./MagneticButton";
 import SoftAurora from "../SoftAurora";
 import GlassSurface from "@/component/GlassSurface";
+import Iridescence from "../custom/Iridescence";
+import Ballpit from "../Ballpit";
 
 const HeroSection = () => {
   return (

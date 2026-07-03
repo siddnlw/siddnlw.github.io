@@ -11,7 +11,7 @@ const commands = [
   { id: "contact", label: "Contact", icon: Mail, section: "#contact", category: "Navigate" },
   { id: "github", label: "Open GitHub", icon: ArrowRight, section: "https://github.com/siddnlw", category: "Links", external: true },
   { id: "linkedin", label: "Open LinkedIn", icon: ArrowRight, section: "https://linkedin.com/in/siddharthnalwaya", category: "Links", external: true },
-  { id: "resume", label: "Download Resume", icon: ArrowRight, section: "#", category: "Actions" },
+  { id: "resume", label: "Download Resume", icon: ArrowRight, section: "/assets/pdf/resume.pdf", category: "Actions", downloadable: true },
 ];
 
 const CommandPalette = () => {
@@ -51,6 +51,7 @@ const CommandPalette = () => {
   useEffect(() => {
     if (!open) return;
     const handler = (e: KeyboardEvent) => {
+      document.querySelector(`[data-command-id="${filtered[selected]?.id}"]`)?.scrollIntoView({ behavior: "smooth" });
       if (e.key === "ArrowDown") {
         e.preventDefault();
         setSelected((s) => Math.min(s + 1, filtered.length - 1));
@@ -71,14 +72,14 @@ const CommandPalette = () => {
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[100] flex items-start justify-center pt-[20vh]"
+          className="fixed inset-0 z-[100] flex items-start justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
         >
             <div
-              className="absolute inset-0 bg-black/15 backdrop-blur-md"
+              className="absolute inset-0 bg-black/15 backdrop-blur-md overscroll-contain overflow-y-auto"
               onClick={() => setOpen(false)}
             />
           <GlassSurface
@@ -92,12 +93,13 @@ const CommandPalette = () => {
             opacity={0.93}
             mixBlendMode="screen"
             borderRadius={20}
-            className=" relative !h-full !w-full max-w-xl mx-4 flex flex-col -translate-y-20"
-            // width={250}
-            // height={70}
+            className="mx-4 !w-[85dvw] sm:!w-[45dvw] flex flex-col  mt-[10vh]"
+            // width={"45dvw"}
+            height={"50dvh"}
+            
           >
             <motion.div
-              className="relative w-[45dvw] h-full mx-4 rounded-2xl overflow-hidden "
+              className="relative !w-full h-[50dvh] mx-4 rounded-2xl "
               initial={{ scale: 0.95, opacity: 0, y: -10 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: -10 }}
@@ -119,7 +121,7 @@ const CommandPalette = () => {
               </div>
 
               {/* Results */}
-              <div className="max-h-[70dvh] overflow-y-auto p-2">
+              <div className="max-h-[38dvh] p-2 scrollbar-none [&::-webkit-scrollbar]:hidden overflow-y-auto overscroll-contain">
                 {filtered.length === 0 && (
                   <div className="text-sm text-white text-center py-8">
                     No results found.
@@ -131,16 +133,30 @@ const CommandPalette = () => {
                     const showCategory = cmd.category !== lastCategory;
                     lastCategory = cmd.category;
                     return (
-                      <div key={cmd.id}>
+                      <div key={cmd.id} data-command-id={cmd.id}>
                         {showCategory && (
                           <div className="text-[10px] uppercase tracking-widest text-white/60 font-mono px-3 pt-3 pb-1">
                             {cmd.category}
                           </div>
                         )}
-                        <button
+                        {cmd.downloadable ? (
+                          <a
+                            href={cmd.section}
+                            download="Siddharth_Nalwaya_Resume.pdf"
+                            className={`w-full cursor-target flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors duration-100 ${
+                              selected === i
+                                ? "bg-primary/10 text-lime-500"
+                                : "text-white hover:text-foreground [text-shadow:_0px_0px_1px_rgba(0,0,0,1)]"
+                            }`}
+                          >
+                            <cmd.icon className="w-4 h-4 shrink-0" />
+                            <span className="flex-1 text-left">{cmd.label}</span>
+                          </a>
+                        ) : (
+                          <button
                           onClick={() => execute(cmd)}
                           onMouseEnter={() => setSelected(i)}
-                          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors duration-100 ${
+                          className={`w-full cursor-target flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors duration-100 ${
                             selected === i
                               ? "bg-primary/10 text-lime-500"
                               : "text-white hover:text-foreground [text-shadow:_0px_0px_1px_rgba(0,0,0,1)]"
@@ -158,6 +174,7 @@ const CommandPalette = () => {
                             </motion.span>
                           )}
                         </button>
+                        )}
                       </div>
                     );
                   });
@@ -165,7 +182,7 @@ const CommandPalette = () => {
               </div>
 
               {/* Footer hint */}
-              <div className="flex items-center justify-between px-4 py-2.5 border-t border-border/50 text-[10px] text-white/50 font-mono">
+              <div className="absolute w-full bottom-0 flex items-center justify-between px-4 py-2.5 border-t border-border/50 text-[10px] text-white/50 font-mono">
                 <span>↑↓ navigate</span>
                 <span>↵ select</span>
                 <span>esc close</span>
